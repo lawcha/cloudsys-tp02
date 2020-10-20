@@ -50,17 +50,25 @@ services:
 
   angular:
     restart: unless-stopped
+<<<<<<< HEAD
     image: frontend/frontend
     build: ./frontend
+=======
+    build:
+      context: ./frontend
+>>>>>>> 1973e8ccd457848dba76ed10d3097df8cfc69f31
     # depends_on: 
     #   - spring-boot
     ports:
       - 80:80
+<<<<<<< HEAD
     deploy:
       mode: global
       placement:
          constraints:
             - "node.hostname==jdu-swarm-3"
+=======
+>>>>>>> 1973e8ccd457848dba76ed10d3097df8cfc69f31
     networks:
       - frontend
 
