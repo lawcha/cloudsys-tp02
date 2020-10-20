@@ -19,17 +19,13 @@ services:
       POSTGRES_PASSWORD: pi-group-6
       POSTGRES_DB: passion-cuisine
       PGDATA: /data/postgres
-    deploy:
-      mode: global
-      placement:
-         constraints:
-            - "node.hostname==jdu-swarm-1"
     networks: 
       - backend
 
   spring-boot:
-    image: backend/backend
-    build: ./backend
+    restart: unless-stopped
+    build:
+      context: ./backend
     ports:
       - 8080:8080
     environment: 
@@ -37,11 +33,6 @@ services:
       PASSION_CUISINE_DB_NAME: passion-cuisine
       PASSION_CUISINE_DB_USER: spring-user
       PASSION_CUISINE_DB_PASS: spring-user-pass
-    deploy:
-      mode: global
-      placement:
-         constraints:
-            - "node.hostname==jdu-swarm-2"
     depends_on: 
       - postgres
     networks:
@@ -50,17 +41,12 @@ services:
 
   angular:
     restart: unless-stopped
-    image: frontend/frontend
-    build: ./frontend
+    build:
+      context: ./frontend
     # depends_on: 
     #   - spring-boot
     ports:
       - 80:80
-    deploy:
-      mode: global
-      placement:
-         constraints:
-            - "node.hostname==jdu-swarm-3"
     networks:
       - frontend
 
@@ -70,14 +56,9 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin
       PGADMIN_DEFAULT_PASSWORD: admin
-    deploy:
-      mode: global
-      placement:
-         constraints:
-            - "node.hostname==jdu-swarm-1"
     volumes:
-      - ./pgadmin_servers.json:/pgadmin4/servers.json
-      - postgres-admin:/root/.pgadmin
+       - ./pgadmin_servers.json:/pgadmin4/servers.json
+       - postgres-admin:/root/.pgadmin
     ports:
       - 5480:80
     networks:
@@ -85,10 +66,11 @@ services:
 
 networks: 
   frontend:
-    driver: overlay
+    driver: bridge
   backend:
-    driver: overlay
+    driver: bridge
 
 volumes: 
   postgres:
   postgres-admin:
+
