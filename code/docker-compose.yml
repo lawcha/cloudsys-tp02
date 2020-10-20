@@ -39,16 +39,16 @@ services:
       - frontend
       - backend
 
-#  angular:
-#    restart: unless-stopped
-#    build:
-#      context: ./frontend
-#    # depends_on: 
-#    #   - spring-boot
-#    ports:
-#      - 80:80
-#    networks:
-#      - frontend
+  angular:
+    restart: unless-stopped
+    build:
+      context: ./frontend
+    # depends_on: 
+    #   - spring-boot
+    ports:
+      - 80:80
+    networks:
+      - frontend
 
   postgres-admin:
     restart: unless-stopped
