@@ -21,7 +21,7 @@ spec:
       containers:
       - env:
         - name: PGDATA
-          value: /data/postgres
+          value: /var/lib/postgresql/data/pgdata
         - name: POSTGRES_DB
           value: passion-cuisine
         - name: POSTGRES_PASSWORD
@@ -34,7 +34,7 @@ spec:
         - containerPort: 5432
         resources: {}
         volumeMounts:
-        - mountPath: /data/postgres
+        - mountPath: /var/lib/postgresql/data
           name: postgres
         - mountPath: //docker-entrypoint-initdb.d/1_schema.sql
           name: postgres-claim1
