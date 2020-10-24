@@ -1,33 +1,33 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
   labels:
-    io.kompose.service: spring-boot
-  name: spring-boot
+    app: passion-cuisine
+  name: spring-boot-deployment
 spec:
   replicas: 1
   strategy: {}
+  selector:
+    matchLabels:
+      app: passion-cuisine
+      component: spring-boot
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        io.kompose.service: spring-boot
+        app: passion-cuisine
+        component: spring-boot
     spec:
       containers:
       - env:
         - name: PASSION_CUISINE_DB_HOST
-          value: postgres:5432
+          value: 10.100.72.37:5432
         - name: PASSION_CUISINE_DB_NAME
           value: passion-cuisine
         - name: PASSION_CUISINE_DB_PASS
           value: spring-user-pass
         - name: PASSION_CUISINE_DB_USER
           value: spring-user
-        image: spring-boot
+        image: passioncuisine/backend
         name: spring-boot
         ports:
         - containerPort: 8080
