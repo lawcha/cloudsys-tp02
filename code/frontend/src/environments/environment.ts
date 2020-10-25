@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: '10.100.140.176',
+  apiUrl: 'http://spring-boot-svc.group-7-ns.svc.cluster.local:8080',
   token: '',
   activeDialog: null
 };

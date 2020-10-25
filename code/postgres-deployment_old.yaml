@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: passion-cuisine
+  name: postgres-deployment
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: passion-cuisine
+      component: postgres
+  template:
+    metadata:
+      labels:
+        app: passion-cuisine
+        component: postgres
+    spec:
+      containers:
+      - env:
+        - name: PGDATA
+          value: /var/lib/postgresql/data
+        - name: POSTGRES_DB
+          value: passion-cuisine
+        - name: POSTGRES_PASSWORD
+          value: pi-group-6
+        - name: POSTGRES_USER
+          value: pi-group-6
+        image: postgres:12
+        name: postgres
+        ports:
+        - containerPort: 5432
+        resources: {}
+        lifecycle:
+          postStart:
+            exec:
+                command: ["/bin/sh", "-c", "service postgresql-12 initdb"]
+        volumeMounts:
+        - mountPath: /docker-entrypoint-initdb.d/
+          name: postgres
+        - mountPath: //docker-entrypoint-initdb.d/1_schema.sql
+          name: postgres-claim1
+        - mountPath: //docker-entrypoint-initdb.d/2_triggers.sql
+          name: postgres-claim2
+        - mountPath: //docker-entrypoint-initdb.d/3_procedures.sql
+          name: postgres-claim3
+        - mountPath: //docker-entrypoint-initdb.d/4_npa_city.sql
+          name: postgres-claim4
+        - mountPath: //docker-entrypoint-initdb.d/5_data.sql
+          name: postgres-claim5
+        - mountPath: //docker-entrypoint-initdb.d/6_spring_role.sql
+          name: postgres-claim6
+      restartPolicy: Always
+      volumes:
+      - name: postgres
+        persistentVolumeClaim:
+          claimName: postgres
+      - name: postgres-claim1
+        persistentVolumeClaim:
+          claimName: postgres-claim1
+      - name: postgres-claim2
+        persistentVolumeClaim:
+          claimName: postgres-claim2
+      - name: postgres-claim3
+        persistentVolumeClaim:
+          claimName: postgres-claim3
+      - name: postgres-claim4
+        persistentVolumeClaim:
+          claimName: postgres-claim4
+      - name: postgres-claim5
+        persistentVolumeClaim:
+          claimName: postgres-claim5
+      - name: postgres-claim6
+        persistentVolumeClaim:
+          claimName: postgres-claim6
+status: {}

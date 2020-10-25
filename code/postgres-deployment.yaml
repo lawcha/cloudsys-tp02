@@ -21,7 +21,7 @@ spec:
       containers:
       - env:
         - name: PGDATA
-          value: /var/lib/postgresql/data/pgdata
+          value: /var/lib/postgresql/data
         - name: POSTGRES_DB
           value: passion-cuisine
         - name: POSTGRES_PASSWORD
@@ -32,43 +32,36 @@ spec:
         name: postgres
         ports:
         - containerPort: 5432
-        resources: {}
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data
-          name: postgres
-        - mountPath: //docker-entrypoint-initdb.d/1_schema.sql
-          name: postgres-claim1
-        - mountPath: //docker-entrypoint-initdb.d/2_triggers.sql
-          name: postgres-claim2
-        - mountPath: //docker-entrypoint-initdb.d/3_procedures.sql
-          name: postgres-claim3
-        - mountPath: //docker-entrypoint-initdb.d/4_npa_city.sql
-          name: postgres-claim4
-        - mountPath: //docker-entrypoint-initdb.d/5_data.sql
-          name: postgres-claim5
-        - mountPath: //docker-entrypoint-initdb.d/6_spring_role.sql
-          name: postgres-claim6
+        - name: data
+          mountPath: /docker-entrypoint-initdb.d/data.sql
+        - name: npa-city
+          mountPath: /docker-entrypoint-initdb.d/npa_city.sql
+        - name: procedures
+          mountPath: /docker-entrypoint-initdb.d/procedures.sql
+        - name: schema
+          mountPath: /docker-entrypoint-initdb.d/schema.sql
+        - name: spring-role
+          mountPath: /docker-entrypoint-initdb.d/spring_role.sql
+        - name: triggers
+          mountPath: /docker-entrypoint-initdb.d/triggers.sql
       restartPolicy: Always
       volumes:
-      - name: postgres
-        persistentVolumeClaim:
-          claimName: postgres
-      - name: postgres-claim1
-        persistentVolumeClaim:
-          claimName: postgres-claim1
-      - name: postgres-claim2
-        persistentVolumeClaim:
-          claimName: postgres-claim2
-      - name: postgres-claim3
-        persistentVolumeClaim:
-          claimName: postgres-claim3
-      - name: postgres-claim4
-        persistentVolumeClaim:
-          claimName: postgres-claim4
-      - name: postgres-claim5
-        persistentVolumeClaim:
-          claimName: postgres-claim5
-      - name: postgres-claim6
-        persistentVolumeClaim:
-          claimName: postgres-claim6
-status: {}
+        - name: data
+          configMap:
+            name: data.sql
+        - name: npa-city
+          configMap:
+            name: npa-city.sql
+        - name: procedures
+          configMap:
+            name: procedures.sql
+        - name: schema
+          configMap:
+            name: schema.sql
+        - name: spring-role
+          configMap:
+            name: spring-role.sql
+        - name: triggers
+          configMap:
+            name: triggers.sql

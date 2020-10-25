@@ -11,5 +11,5 @@ spec:
     targetPort: 5432
   selector:
     app: passion-cuisine
-    component: postgres-admin
+    component: postgres
   clusterIP: 10.100.72.37

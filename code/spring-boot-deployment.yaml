@@ -20,7 +20,7 @@ spec:
       containers:
       - env:
         - name: PASSION_CUISINE_DB_HOST
-          value: 10.100.72.37:5432
+          value: postgres-svc.group-7-ns.svc.cluster.local:5432
         - name: PASSION_CUISINE_DB_NAME
           value: passion-cuisine
         - name: PASSION_CUISINE_DB_PASS

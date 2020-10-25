@@ -1,10 +1,10 @@
 kubectl delete deployment.apps/angular-deployment
-kubectl delete deployment.apps/postgres-admin-deployment
-kubectl delete deployment.apps/postgres-deployment
-kubectl delete deployment.apps/spring-boot-deployment
 kubectl delete service/angular-svc
-kubectl delete service/postgres-svc
+kubectl delete deployment.apps/postgres-admin-deployment
 kubectl delete service/postgres-admin-svc
+kubectl delete deployment.apps/postgres-deployment
+kubectl delete service/postgres-svc
+kubectl delete deployment.apps/spring-boot-deployment
 kubectl delete service/spring-boot-svc
 
 kubectl apply -f angular-deployment.yaml
@@ -24,4 +24,12 @@ kubectl apply -f postgres-claim6-persistentvolumeclaim.yaml
 kubectl apply -f postgres-deployment.yaml
 kubectl apply -f postgres-persistentvolumeclaim.yaml
 kubectl apply -f postgres-service.yaml
+
+
+kubectl create configmap data.sql --from-file=db-scripts/data.sql
+kubectl create configmap npa-city.sql --from-file=db-scripts/npa_city.sql
+kubectl create configmap procedures.sql --from-file=db-scripts/procedures.sql
+kubectl create configmap schema.sql --from-file=db-scripts/schema.sql
+kubectl create configmap spring-role.sql --from-file=db-scripts/spring_role.sql
+kubectl create configmap triggers.sql --from-file=db-scripts/triggers.sql
 
