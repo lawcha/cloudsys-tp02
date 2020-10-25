@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://spring-boot-svc.group-7-ns.svc.cluster.local:8080',
+  apiUrl: 'http://a3933f25a44964b70a347775fdbe06b3-1795603877.eu-north-1.elb.amazonaws.com:8080',
   token: '',
   activeDialog: null
 };
